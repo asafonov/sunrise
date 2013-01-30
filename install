@@ -1,0 +1,4 @@
+#!/bin/bash
+TMPNAME=`pwd`
+echo $TMPNAME/sunrise.py $TMPNAME/ >> /usr/bin/sunrise
+chmod 755 /usr/bin/sunrise
