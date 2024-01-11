@@ -1,13 +1,13 @@
 class DrumTrackView {
 
-  constructor (name) {
+  constructor (name, color, parentContainer) {
     this.controller = new DrumTrackController(name)
     this.container = document.createElement('div')
     this.container.classList.add('row')
     this.container.classList.add('notes_row')
-    document.querySelector('.drumtrack').appendChild(this.container)
+    parentContainer.appendChild(this.container)
     this.initName()
-    this.initTrack()
+    this.initTrack(color)
   }
 
   initName() {
@@ -19,11 +19,11 @@ class DrumTrackView {
     this.container.appendChild(this.nameContainer)
   }
 
-  initTrack() {
+  initTrack (color) {
     this.trackContainer = document.createElement('div')
     this.trackContainer.classList.add('col')
     this.trackContainer.classList.add('notes_col')
-    this.trackContainer.classList.add('red_color')
+    this.trackContainer.classList.add(`${color}_color`)
     this.container.appendChild(this.trackContainer)
     const track = this.controller.getModel().getTrack()
 
