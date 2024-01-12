@@ -8,6 +8,15 @@ class DrumTrackView {
     parentContainer.appendChild(this.container)
     this.initName()
     this.initTrack(color)
+    this.addEventListeners()
+  }
+
+  addEventListeners() {
+    asafonov.messageBus.subscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
+  }
+
+  removeEventListeners() {
+    asafonov.messageBus.unsubscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
   }
 
   initName() {
@@ -32,13 +41,26 @@ class DrumTrackView {
       div.className = 'note'
       div.classList.add(`note_o${track[i] ? 'n' : 'ff'}`)
       div.addEventListener('click', () => {
-        asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.controller.getModel().getName(), number: i});
+        asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.controller.getModel().getName(), index: i});
       })
       this.trackContainer.appendChild(div)
     }
   }
 
+  onTrackModelUpdate (data) {
+    if (data.name !== this.controller.getModel().getName()) {
+      return
+    }
+
+    const div = this.trackContainer.getElementsByTagName('div')[data.index]
+    const track = this.controller.getModel().getTrack()[data.index]
+    div.classList.remove('note_off')
+    div.classList.remove('note_on')
+    div.classList.add(`note_o${track ? 'n' : 'ff'}`)
+  }
+
   destroy() {
+    this.removeEventListeners()
     this.controller.destroy()
     this.trackContainer.innerHTML = ''
     this.trackContainer = null

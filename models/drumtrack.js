@@ -14,6 +14,11 @@ class DrumTrack {
     }
   }
 
+  updateTrackIndex (index) {
+    this.track[index] = ! this.track[index]
+    return this.track[index]
+  }
+
   getName() {
     return this.name
   }
@@ -24,5 +29,11 @@ class DrumTrack {
 
   getFile() {
     return this.file
+  }
+
+  destroy() {
+    this.name = null
+    this.file = null
+    this.track = null
   }
 }

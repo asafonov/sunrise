@@ -2,7 +2,6 @@ class DrumTrackController {
 
   constructor (name, tempo, length) {
     this.model = new DrumTrack(name, length)
-    this.audio = new Audio(this.model.getFile())
     this.tempo = tempo || 120
     this.addEventListeners()
   }
@@ -16,7 +15,8 @@ class DrumTrackController {
   }
 
   play() {
-    this.audio.play()
+    const audio = new Audio(this.model.getFile())
+    audio.play()
   }
 
   onTrackViewUpdate (data) {
@@ -25,6 +25,8 @@ class DrumTrackController {
     }
 
     this.play()
+    this.model.updateTrackIndex(data.index)
+    asafonov.messageBus.send(asafonov.events.TRACK_MODEL_UPDATED, data)
   }
 
   getModel() {
@@ -34,7 +36,6 @@ class DrumTrackController {
   destroy() {
     this.removeEventListeners()
     this.tempo = null
-    this.audio = null
     this.model.destroy()
     this.model = null
   }
