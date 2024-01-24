@@ -8,6 +8,7 @@ class ControlView {
     this.container.classList.add(this.getClassByIsPlaying())
     this.container.innerHTML = this.getIcon()
     parentContainer.appendChild(this.container)
+    this.onControlClickedProxy = this.onControlClicked.bind(this)
     this.addEventListeners()
   }
 
@@ -18,11 +19,17 @@ class ControlView {
   }
 
   addEventListeners() {
+    this.container.addEventListener('click', this.onControlClickedProxy)
     asafonov.messageBus.subscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
   }
 
   removeEventListeners() {
+    this.container.removeEventListener('click', this.onControlClickedProxy)
     asafonov.messageBus.unsubscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
+  }
+
+  onControlClicked() {
+    asafonov.messageBus.send(asafonov.events.IS_PLAYING_UPDATED, {isPlaying: this.name === 'play'})
   }
 
   getClassByIsPlaying (isPlaying) {
@@ -34,6 +41,9 @@ class ControlView {
   }
 
   onIsPlayingUpdate (data) {
+    this.container.classList.remove('icon_on')
+    this.container.classList.remove('icon_off')
+    this.container.classList.add(this.getClassByIsPlaying(data.isPlaying))
   }
 
   destroy() {

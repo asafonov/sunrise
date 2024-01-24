@@ -213,6 +213,7 @@ body {
   font-size: calc(1.5*var(--height_main));
   margin: 0 var(--height_wrap);
   cursor: pointer;
+  height: var(--height_main);
 }
 
 .controls .icon.icon_on {
