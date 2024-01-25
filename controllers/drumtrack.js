@@ -3,7 +3,7 @@ class DrumTrackController {
   constructor (name, tempo, length) {
     this.model = new DrumTrack(name, length)
     this.tempo = tempo || 120
-    this.interval = 60 / this.tempo * 1000
+    this.interval = 60 / this.tempo / 4 * 1000
     this.addEventListeners()
   }
 
