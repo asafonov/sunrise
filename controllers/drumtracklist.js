@@ -21,17 +21,17 @@ class DrumTrackListController {
 
   onIsPlayingUpdate ({isPlaying}) {
     if (this.timeout) clearTimeout(this.timeout)
+    if (! isPlaying) return
     if (this.tracks.length === 0) return
 
-    if (isPlaying) {
-      for (let i = 0; i < this.tracks[0].getModel().getLength(); ++i) {
-        for (let j = 0; j < this.tracks.length; ++j) {
-          const f = []
-          if (this.tracks[j].isOn(i)) f.push(() => this.tracks[j].play())
-          if (f.length > 0) setTimeout(() => {
-            for (let k = 0; k < f.length; ++k) f[k]()
-          }, i * this.interval)
-        }
+    for (let i = 0; i < this.tracks[0].getModel().getLength(); ++i) {
+      for (let j = 0; j < this.tracks.length; ++j) {
+        const f = []
+
+        if (this.tracks[j].isOn(i)) f.push(() => this.tracks[j].play())
+        if (f.length > 0) setTimeout(() => {
+          for (let k = 0; k < f.length; ++k) f[k]()
+        }, i * this.interval)
       }
     }
   }

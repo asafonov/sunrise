@@ -7,7 +7,6 @@ class MessageBus {
   send (type, data) {
     if (this.subscribers[type] !== null && this.subscribers[type] !== undefined) {
       for (var i = 0; i < this.subscribers[type].length; ++i) {
-        console.log(this.subscribers[type][i])
         this.subscribers[type][i]['object'][this.subscribers[type][i]['func']](data);
       }
     }
