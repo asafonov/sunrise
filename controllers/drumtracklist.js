@@ -23,8 +23,9 @@ class DrumTrackListController {
     if (this.timeout) clearTimeout(this.timeout)
     if (! isPlaying) return
     if (this.tracks.length === 0) return
+    const trackLen = this.tracks[0].getModel().getLength()
 
-    for (let i = 0; i < this.tracks[0].getModel().getLength(); ++i) {
+    for (let i = 0; i < trackLen; ++i) {
       for (let j = 0; j < this.tracks.length; ++j) {
         const f = []
 
@@ -34,6 +35,8 @@ class DrumTrackListController {
         }, i * this.interval)
       }
     }
+
+    this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying: isPlaying}), this.interval * trackLen)
   }
 
   destroy() {
