@@ -19,6 +19,10 @@ class DrumTrackView {
     asafonov.messageBus.unsubscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
   }
 
+  getController() {
+    return this.controller
+  }
+
   initName() {
     this.nameContainer = document.createElement('div')
     this.nameContainer.classList.add('col')

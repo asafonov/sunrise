@@ -3,6 +3,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
   updaterView.showUpdateDialogIfNeeded()
   const drums = ['kick', 'hihat', 'snare', 'low_tom', 'medium_tom', 'high_tom', 'crash']
   const drumView = new DrumTrackListView(drums)
-  const controls = ['play', 'stop', 'pause']
+  const controls = ['play', 'stop']
   const controlView = new ControlListView(controls)
 })
