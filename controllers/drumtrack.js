@@ -14,7 +14,12 @@ class DrumTrackController {
   }
 
   play() {
-    const audio = new Audio(this.model.getFile())
+    const buffer = new Uint8Array(this.model.getBytes().length)
+    buffer.set(new Uint8Array(this.model.getBytes()), 0)
+    const blob = new Blob([buffer], {type: 'audio/wav'})
+    const url = URL.createObjectURL(blob)
+    const audio = new Audio()
+    audio.src = url
     audio.play()
   }
 
