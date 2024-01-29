@@ -2,7 +2,7 @@ class DrumTrack {
 
   constructor (name, length) {
     this.name = name
-    this.file = `./audio/${name}/01.mp3`
+    this.file = `./audio/${name}/01.wav`
     this.length = length || 16
     this.initTrack(this.length)
   }
