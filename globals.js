@@ -7,7 +7,7 @@ window.asafonov.events = {
   IS_PLAYING_UPDATED: 'IS_PLAYING_UPDATED'
 }
 window.asafonov.utils = {
-  normalize: v => (v > 0 ? Math.min(v, 256 * 128 - 1) : Math.max(v, -256 * 128 + 1)) + 256 * 128,
+  normalize: v => v > 0 ? Math.min(v, 256 * 128 - 1) : Math.max(v, -256 * 128 + 1) + 256 * 256 -1,
 
   formatSize: size => {
     const ret = [size % 256]
@@ -40,7 +40,11 @@ window.asafonov.utils = {
       let res = 0
 
       for (let j = 0; j < wavs.length; ++j) {
-        res += (wavs[j][i] || 0) + (wavs[j][i + 1] || 0) * 256 - 256 * 128
+        let v = (wavs[j][i] || 0) + (wavs[j][i + 1] || 0) * 256
+
+        if (v > 256 * 128 - 1) v = v - 256*256 + 1
+
+        res += v
       }
 
       res = asafonov.utils.normalize(res)
