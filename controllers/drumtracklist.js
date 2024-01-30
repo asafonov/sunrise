@@ -1,7 +1,7 @@
 class DrumTrackListController {
 
   constructor (tempo) {
-    this.tempo = tempo || 120
+    this.tempo = tempo || 100
     this.interval = 60 / this.tempo / 4 * 1000
     this.tracks = []
     this.addEventListeners()
@@ -20,6 +20,14 @@ class DrumTrackListController {
   }
 
   onIsPlayingUpdate ({isPlaying}) {
+    if (this.timeout) clearTimeout(this.timeout)
+    if (! isPlaying) return
+
+    const result = asafonov.utils.mergeWavs([this.tracks[0].getModel().getBytes(), this.tracks[1].getModel().getBytes()])
+    asafonov.utils.play(result)
+  }
+
+  onIsPlayingUpdate1 ({isPlaying}) {
     if (this.timeout) clearTimeout(this.timeout)
     if (! isPlaying) return
     if (this.tracks.length === 0) return
