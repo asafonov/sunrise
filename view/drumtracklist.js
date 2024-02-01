@@ -1,5 +1,5 @@
 class DrumTrackListView {
-  
+
   constructor (list) {
     this.colors = ['red', 'green', 'yellow', 'green2', 'blue', 'blue2', 'violet']
     this.container = document.querySelector('.drumtrack')

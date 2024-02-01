@@ -1,5 +1,5 @@
 class ControlListView {
-  
+
   constructor (list) {
     this.container = document.querySelector('.controls')
 
