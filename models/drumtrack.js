@@ -19,6 +19,8 @@ class DrumTrack {
       if (data.value) this.data = this.data.concat(Array.from(data.value))
       if (data.done) break
     }
+
+    this.data = this.data.slice(44)
   }
 
   initTrack (length) {

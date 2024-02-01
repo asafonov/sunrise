@@ -14,7 +14,7 @@ class DrumTrackController {
   }
 
   play() {
-    asafonov.utils.play(this.model.getBytes())
+    asafonov.waveUtils.play(this.model.getBytes())
   }
 
   onTrackViewUpdate (data) {
@@ -29,6 +29,25 @@ class DrumTrackController {
 
   isOn (index) {
     return this.model.getTrack()[index]
+  }
+
+  getTrack() {
+    const bitLength = 44100 * 60 / asafonov.settings.tempo
+    const length = this.model.getTrack().length
+    const wavs = []
+    const starts = []
+
+    for (let i = 0; i < length; ++i) {
+      if (this.isOn(i)) {
+        wavs.push(this.model.getBytes())
+        starts.push(i * bitLength)
+      }
+    }
+
+    if (wavs.length === 0) return
+    console.log(starts)
+
+    return asafonov.waveUtils.mixWavs(wavs, starts)
   }
 
   getModel() {
