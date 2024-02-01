@@ -24,14 +24,13 @@ const waveUtils = {
   },
 
   mixWavs: (wavs, starts) => {
+    wavs = wavs.filter(i => i && i.length > 0)
     if (starts === null || starts === undefined) starts = []
     let length = 0
 
     for (let i = 0; i < wavs.length; ++i) {
       length = Math.max(wavs[i].length + (starts[i] || 0), length)
     }
-
-    console.log(length)
 
     let i = 0
     const ret = []
@@ -40,8 +39,8 @@ const waveUtils = {
       let res = 0
 
       for (let j = 0; j < wavs.length; ++j) {
-        const b0 = i >= starts[j] ? wavs[j][i - (starts[j] || 0)] || 0 : 0
-        const b1 = i >= starts[j] ? wavs[j][i + 1 - (starts[j] || 0)] || 0 : 0
+        const b0 = ! starts[j] || i >= starts[j] ? wavs[j][i - (starts[j] || 0)] || 0 : 0
+        const b1 = ! starts[j] || i >= starts[j] ? wavs[j][i + 1 - (starts[j] || 0)] || 0 : 0
         let v = b0 + b1 * 256
 
         if (v > 256 * 128 - 1) v = v - 256*256 + 1

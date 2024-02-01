@@ -2,6 +2,7 @@ class DrumTrackListController {
 
   constructor () {
     this.tracks = []
+    this.mix = []
     this.addEventListeners()
   }
 
@@ -21,13 +22,25 @@ class DrumTrackListController {
     this.tracks.push(controller)
   }
 
-  onIsPlayingUpdate ({isPlaying}) {
-    if (this.timeout) clearTimeout(this.timeout)
-    if (! isPlaying) return
+  mixList() {
+    const tracks = []
 
-    const result = this.tracks[0].getTrack()
-    console.log(result)
-    asafonov.waveUtils.play(result)
+    for (let i = 0; i < this.tracks.length; ++i) {
+      tracks.push(this.tracks[i].getTrack())
+    }
+
+    this.mix = asafonov.waveUtils.mixWavs(tracks)
+  }
+
+  onIsPlayingUpdate ({isPlaying}) {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+
+    if (! isPlaying) return
+    this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying}), this.getInterval() * 16)
+    this.mix.length === 0 && this.mixList()
+    asafonov.waveUtils.play(this.mix)
   }
 
   destroy() {
@@ -35,6 +48,7 @@ class DrumTrackListController {
     if (this.timeout) clearTimeout(this.timeout)
     this.timeout = null
     this.tracks = null
+    this.mix = null
   }
 
 }

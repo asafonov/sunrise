@@ -45,7 +45,6 @@ class DrumTrackController {
     }
 
     if (wavs.length === 0) return
-    console.log(starts)
 
     return asafonov.waveUtils.mixWavs(wavs, starts)
   }
