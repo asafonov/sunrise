@@ -29,22 +29,21 @@ class DrumTrackListController {
       tracks.push(this.tracks[i].getTrack())
     }
 
-    this.mix = asafonov.waveUtils.mixWavs(tracks)
+    return asafonov.waveUtils.mixWavs(tracks)
   }
 
-  onIsPlayingUpdate ({isPlaying, repeat}) {
+  onIsPlayingUpdate ({isPlaying, loop}) {
     if (this.timeout) {
       clearTimeout(this.timeout)
     }
 
     if (! isPlaying) return
 
-    this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying, repeat: true}), this.getInterval() * 16)
+    this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying, loop: true}), this.getInterval() * 16)
 
-    if (repeat) return asafonov.waveUtils.play()
+    if (loop) return asafonov.waveUtils.play()
 
-    this.mix.length === 0 && this.mixList()
-    asafonov.waveUtils.play(this.mix)
+    asafonov.waveUtils.play(this.mixList())
   }
 
   destroy() {
