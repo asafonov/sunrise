@@ -1,4 +1,6 @@
 const waveUtils = {
+  audio: new Audio(),
+
   normalize: v => v >= 0 ? Math.min(v, 256 * 128 - 1) : Math.max(v, -256 * 128 + 1) + 256 * 256 -1,
 
   formatSize: size => {
@@ -60,12 +62,14 @@ const waveUtils = {
   },
 
   play: bytes => {
-    const buffer = new Uint8Array(bytes.length + 44)
-    buffer.set(new Uint8Array([...waveUtils.getWavHeader(bytes.length), ...bytes]), 0)
-    const blob = new Blob([buffer], {type: 'audio/wav'})
-    const url = URL.createObjectURL(blob)
-    const audio = new Audio()
-    audio.src = url
-    audio.play()
+    if (bytes !== null && bytes !== undefined) {
+      const buffer = new Uint8Array(bytes.length + 44)
+      buffer.set(new Uint8Array([...waveUtils.getWavHeader(bytes.length), ...bytes]), 0)
+      const blob = new Blob([buffer], {type: 'audio/wav'})
+      const url = URL.createObjectURL(blob)
+      waveUtils.audio.src = url
+    }
+
+    waveUtils.audio.play()
   }
 }
