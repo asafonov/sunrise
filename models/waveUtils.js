@@ -11,6 +11,20 @@ const waveUtils = {
     return ret
   },
 
+  pitch: (wav, ratio) => {
+    let p = 0
+    return wav.filter((v, i) => {
+      const n = parseInt(i * (1 - ratio))
+
+      if (n > p) {
+        p = n
+        return false
+      }
+
+      return true
+    })
+  },
+
   getWavHeader: length => {
     return [82, 73, 70, 70,
           ...waveUtils.formatSize(length + 44),
