@@ -6,6 +6,7 @@ window.asafonov.events = {
   TRACK_VIEW_UPDATED: 'TRACK_VIEW_UPDATED',
   IS_PLAYING_UPDATED: 'IS_PLAYING_UPDATED'
 }
+window.asafonov.notes = notes
 window.asafonov.waveUtils = waveUtils
 window.asafonov.settings = {
   tempo: 100
