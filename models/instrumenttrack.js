@@ -1,11 +1,12 @@
 class InstrumentTrack {
 
-  constructor (name, length) {
+  constructor (name, length, base) {
     this.name = name
     this.data = []
     this.length = length || 16
+    this.base = base || 'c4'
     this.initTrack(this.length)
-    const file = `./audio/${name}/c4.wav`
+    const file = `./audio/${name}/${this.base}.wav`
     this.initData(file)
   }
 
@@ -26,19 +27,19 @@ class InstrumentTrack {
   initTrack (length) {
     this.track = {}
 
-    for (let k in window.asafonov.notes) {
+    for (let k in asafonov.notes) {
       this.track[k] = []    
 
       for (let i = 0; i < length; ++i) {
-        this.track.push(false)
+        this.track[k].push(false)
       }
     }
 
   }
 
-  updateTrackIndex (index) {
-    this.track[index] = ! this.track[index]
-    return this.track[index]
+  updateTrackIndex (key, index) {
+    this.track[key][index] = ! this.track[key][index]
+    return this.track[key][index]
   }
 
   getName() {
@@ -53,14 +54,20 @@ class InstrumentTrack {
     return this.length
   }
 
-  getBytes() {
-    return this.data
+  getBytes (note) {
+    if (note === this.base)
+      return this.data
+
+    if (! asafonov.notes[note]) return []
+
+    return asafonov.waveUtils.pitch(this.data, asafonov.notes[note] / asafonov.notes[this.base])
   }
 
   destroy() {
     this.name = null
     this.data = null
     this.track = null
+    this.base = null
     this.length = null
   }
 }
