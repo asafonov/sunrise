@@ -60,7 +60,8 @@ class InstrumentTrack {
 
     if (! asafonov.notes[note]) return []
 
-    return asafonov.waveUtils.pitch(this.data, asafonov.notes[note] / asafonov.notes[this.base])
+    const ratio = asafonov.notes[this.base] / asafonov.notes[note]
+    return asafonov.waveUtils.pitch(this.data, ratio)
   }
 
   destroy() {

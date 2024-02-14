@@ -14,7 +14,8 @@ class InstrumentTrackController {
   }
 
   play (note) {
-    asafonov.waveUtils.play(this.model.getBytes(note))
+    const data = this.model.getBytes(note)
+    asafonov.waveUtils.play(data)
   }
 
   onTrackViewUpdate (data) {

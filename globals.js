@@ -8,6 +8,7 @@ window.asafonov.events = {
 }
 window.asafonov.notes = notes
 window.asafonov.waveUtils = waveUtils
+window.asafonov.colors = ['red', 'green', 'yellow', 'green2', 'blue', 'blue2', 'violet']
 window.asafonov.settings = {
   tempo: 100
 }

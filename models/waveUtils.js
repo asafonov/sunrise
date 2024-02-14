@@ -12,17 +12,25 @@ const waveUtils = {
   },
 
   pitch: (wav, ratio) => {
+    const bytesPerStep = 2
     let p = 0
-    return wav.filter((v, i) => {
-      const n = parseInt(i * (1 - ratio))
+    let i = 0
+    const ret = []
+
+    while (i < wav.length) {
+      const n = parseInt(i / bytesPerStep * (1 - ratio))
 
       if (n > p) {
         p = n
-        return false
+      } else {
+        for (let j = 0; j < bytesPerStep; ++j)
+          ret.push(wav[i + j])
       }
 
-      return true
-    })
+      i += bytesPerStep
+    }
+
+    return ret
   },
 
   getWavHeader: length => {

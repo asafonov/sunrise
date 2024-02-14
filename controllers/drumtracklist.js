@@ -43,7 +43,9 @@ class DrumTrackListController {
 
     if (loop) return asafonov.waveUtils.play()
 
-    asafonov.waveUtils.play(this.mixList())
+    const data = this.mixList()
+
+    data.length > 0 && asafonov.waveUtils.play(data)
   }
 
   destroy() {
