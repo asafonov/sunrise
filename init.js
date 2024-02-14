@@ -5,4 +5,5 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const drumView = new DrumTrackListView(drums)
   const controls = ['play', 'stop']
   const controlView = new ControlListView(controls)
+  const rockyGuitar = new InstrumentTrackView('rocky_guitar')
 })
