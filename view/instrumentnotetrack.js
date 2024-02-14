@@ -25,12 +25,12 @@ class InstrumentNoteTrackView {
     return this.controller
   }
 
-  initName() {
+  initNote() {
     this.nameContainer = document.createElement('div')
     this.nameContainer.classList.add('col')
     this.nameContainer.classList.add('names_col')
     this.nameContainer.classList.add('name')
-    this.nameContainer.innerHTML = this.note
+    this.nameContainer.innerHTML = this.note.replace('_', '#')
     this.container.appendChild(this.nameContainer)
   }
 
@@ -41,10 +41,10 @@ class InstrumentNoteTrackView {
     this.trackContainer.classList.add(`${color}_color`)
     this.container.appendChild(this.trackContainer)
 
-    for (let i = 0; i < track.length; ++i) {
+    for (let i = 0; i < this.track.length; ++i) {
       const div = document.createElement('div')
       div.className = 'note'
-      div.classList.add(`note_o${track[i] ? 'n' : 'ff'}`)
+      div.classList.add(`note_o${this.track[i] ? 'n' : 'ff'}`)
       div.addEventListener('click', () => {
         asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.name, note: this.note, index: i});
       })
