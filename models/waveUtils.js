@@ -13,16 +13,23 @@ const waveUtils = {
 
   pitch: (wav, ratio) => {
     let p = 0
-    return wav.filter((v, i) => {
-      const n = parseInt(i * (1 - ratio))
+    let i = 0
+    const ret = []
+
+    while (i < wav.length) {
+      const n = parseInt(i / 2 * (1 - ratio))
 
       if (n > p) {
         p = n
-        return false
+      } else {
+        ret.push(wav[i])
+        ret.push(wav[i + 1])
       }
 
-      return true
-    })
+      i += 2
+    }
+
+    return ret
   },
 
   getWavHeader: length => {
