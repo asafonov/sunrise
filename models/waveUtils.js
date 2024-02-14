@@ -12,21 +12,22 @@ const waveUtils = {
   },
 
   pitch: (wav, ratio) => {
+    const bytesPerStep = 2
     let p = 0
     let i = 0
     const ret = []
 
     while (i < wav.length) {
-      const n = parseInt(i / 2 * (1 - ratio))
+      const n = parseInt(i / bytesPerStep * (1 - ratio))
 
       if (n > p) {
         p = n
       } else {
-        ret.push(wav[i])
-        ret.push(wav[i + 1])
+        for (let j = 0; j < bytesPerStep; ++j)
+          ret.push(wav[i + j])
       }
 
-      i += 2
+      i += bytesPerStep
     }
 
     return ret
