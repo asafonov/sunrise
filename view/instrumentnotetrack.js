@@ -60,7 +60,7 @@ class InstrumentNoteTrackView {
     const div = this.trackContainer.getElementsByTagName('div')[data.index]
     div.classList.remove('note_off')
     div.classList.remove('note_on')
-    div.classList.add(`note_o${this.track ? 'n' : 'ff'}`)
+    div.classList.add(`note_o${this.track[data.index] ? 'n' : 'ff'}`)
   }
 
   destroy() {
