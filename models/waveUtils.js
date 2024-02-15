@@ -3,6 +3,8 @@ const waveUtils = {
 
   normalize: v => v >= 0 ? Math.min(v, 256 * 128 - 1) : Math.max(v, -256 * 128 + 1) + 256 * 256 -1,
 
+  getInterval : tempo => 60 / tempo / 4 * 1000,
+
   formatSize: size => {
     const ret = [size % 256]
     ret.push((size - ret[0]) / 256 % 256)

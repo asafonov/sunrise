@@ -7,10 +7,12 @@ class InstrumentTrackController {
 
   addEventListeners() {
     asafonov.messageBus.subscribe(asafonov.events.TRACK_VIEW_UPDATED, this, 'onTrackViewUpdate')
+    asafonov.messageBus.subscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
   }
 
   removeEventListeners() {
     asafonov.messageBus.unsubscribe(asafonov.events.TRACK_VIEW_UPDATED, this, 'onTrackViewUpdate')
+    asafonov.messageBus.unsubscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
   }
 
   play (note) {
@@ -42,14 +44,14 @@ class InstrumentTrackController {
     return asafonov.waveUtils.mixWavs(wavs)
   }
 
-  getNoteTrack(note) {
+  getNoteTrack (note) {
     const bitLength = 44100 * 60 / asafonov.settings.tempo
     const length = this.model.getTrack()[note].length
     const wavs = []
     const starts = []
 
     for (let i = 0; i < length; ++i) {
-      if (this.isOn(i)) {
+      if (this.isOn(note, i)) {
         wavs.push(this.model.getBytes(note))
         starts.push(i * bitLength)
       }
@@ -64,8 +66,29 @@ class InstrumentTrackController {
     return this.model
   }
 
+  getInterval() {
+    return asafonov.waveUtils.getInterval(asafonov.settings.tempo)
+  }
+
+  onIsPlayingUpdate ({isPlaying, loop}) {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+
+    if (! isPlaying) return
+
+    this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying, loop: true}), this.getInterval() * 16)
+
+    if (loop) return asafonov.waveUtils.play()
+
+    const data = this.getTrack()
+    data.length > 0 && asafonov.waveUtils.play(data)
+  }
+
   destroy() {
     this.removeEventListeners()
+    this.timeout && clearTimeout(this.timeout)
+    this.timeout = null
     this.model.destroy()
     this.model = null
   }

@@ -15,7 +15,7 @@ class DrumTrackListController {
   }
 
   getInterval() {
-    return 60 / asafonov.settings.tempo / 4 * 1000
+    return asafonov.waveUtils.getInterval(asafonov.settings.tempo)
   }
 
   addTrackController (controller) {
@@ -44,13 +44,12 @@ class DrumTrackListController {
     if (loop) return asafonov.waveUtils.play()
 
     const data = this.mixList()
-
     data.length > 0 && asafonov.waveUtils.play(data)
   }
 
   destroy() {
     this.removeEventListeners()
-    if (this.timeout) clearTimeout(this.timeout)
+    this.timeout && clearTimeout(this.timeout)
     this.timeout = null
     this.tracks = null
     this.mix = null
