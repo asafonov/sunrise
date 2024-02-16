@@ -2,6 +2,8 @@ class DrumTrack {
 
   constructor (name, length) {
     this.name = name
+    this.volume = asafonov.settings.volume.default
+    this.isMuted = false
     this.data = []
     this.length = length || 16
     this.initTrack(this.length)
@@ -36,6 +38,22 @@ class DrumTrack {
     return this.track[index]
   }
 
+  getVolume() {
+    return this.volume
+  }
+
+  setVolume (volume) {
+    this.volume = volume
+  }
+
+  getIsMuted() {
+    return this.isMuted
+  }
+
+  updateIsMuted() {
+    this.isMuted = ! this.isMuted
+  }
+
   getName() {
     return this.name
   }
@@ -49,11 +67,14 @@ class DrumTrack {
   }
 
   getBytes() {
+    if (this.isMuted) return []
     return this.data
   }
 
   destroy() {
     this.name = null
+    this.volume = null
+    this.isMuted  = null
     this.data = null
     this.track = null
     this.length = null

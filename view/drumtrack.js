@@ -17,15 +17,18 @@ class DrumTrackView {
     this.initVolume(volumeContainer)
     this.initName(mainContainer)
     this.initTrack(mainContainer, color)
+    this.onSpeakerClickProxy = this.onSpeakerClick.bind(this)
     this.addEventListeners()
   }
 
   addEventListeners() {
     asafonov.messageBus.subscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
+    this.speakerContainer.addEventListener('click', this.onSpeakerClickProxy)
   }
 
   removeEventListeners() {
     asafonov.messageBus.unsubscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
+    this.speakerContainer.removeEventListener('click', this.onSpeakerClickProxy)
   }
 
   getController() {
@@ -42,18 +45,17 @@ class DrumTrackView {
   }
 
   initVolume (volumeContainer) {
-    this.volumeContainer = volumeContainer
-    const speakerContainer = document.createElement('div')
-    speakerContainer.className = 'speaker'
-    this.volumeContainer.appendChild(speakerContainer)
+    this.speakerContainer = document.createElement('div')
+    this.speakerContainer.className = 'speaker'
+    volumeContainer.appendChild(this.speakerContainer)
     const volumeRowContainer = document.createElement('div')
     volumeRowContainer.classList.add('col')
     volumeRowContainer.classList.add('volume_row')
-    this.volumeContainer.appendChild(volumeRowContainer)
-    volumeRowContainer.innerHTML = '<div class="volume_item"></div>'
-    volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
-    volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
-    volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
+    volumeContainer.appendChild(volumeRowContainer)
+    volumeRowContainer.innerHTML = ''
+
+    for (let i = 0; i < asafonov.settings.volume.default; ++i)
+      volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
   }
 
   initTrack (container, color) {
@@ -87,13 +89,16 @@ class DrumTrackView {
     div.classList.add(`note_o${track ? 'n' : 'ff'}`)
   }
 
+  onSpeakerClick() {
+    asafonov.messageBus.send(asafonov.events.SPEAKER_VIEW_UPDATED, {name: this.controller.getModel().getName()});
+  }
+
   destroy() {
     this.removeEventListeners()
     this.controller.destroy()
     this.trackContainer.innerHTML = ''
     this.trackContainer = null
-    this.volumeContainer.innerHTML = ''
-    this.volumeContainer = null
+    this.speakerContainer = null
     this.controller = null
   }
 
