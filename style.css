@@ -107,6 +107,7 @@ body {
 
 .names_col {
   flex: 20%;
+  align-items: center;
 }
 
 .notes_col {
@@ -114,10 +115,91 @@ body {
   justify-content: space-between;
 }
 
+.drumtrack .volume_col {
+  flex: 10%;
+  flex-grow: 0;
+  align-items: center;
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+.drumtrack .main_col {
+  flex: 90%;
+}
+
+.drumtrack .main_col .names_col {
+  flex: 10%;
+  flex-grow: 0;
+}
+
+.drumtrack .main_col .notes_col {
+  flex: 90%;
+}
+
+.speaker {
+  vertical-align: middle;
+  box-sizing: border-box;
+  display: inline-block;
+  background: var(--color_white_light);
+  background-clip: content-box;
+  width: calc(var(--height_main)/1.1);
+  height: var(--height_main);
+  border: calc(var(--height_radius)*2) solid transparent;
+  border-right-color: var(--color_white_light);
+  position: relative;
+  left: calc(var(--height_radius)*-2);
+  border-radius: var(--height_radius);
+  flex-shrink: 0;
+}
+
+.volume_col .speaker {
+  scale: 0.6;
+  cursor: pointer;
+}
+
+.speaker.speaker_off {
+  background-color: var(--color_white_dark);
+  border-right-color: var(--color_white_dark);
+}
+
+.speaker.speaker_off::after {
+  content:"";
+  position:absolute;
+  border-top: calc(var(--border)*2) solid var(--color_white_light);
+  border-radius: var(--height_radius);
+  width: var(--height_main);
+  transform: rotate(45deg);
+  transform-origin: 0% 0%;
+  top: calc(var(--height_radius)*-1);
+}
+
+.volume_row {
+  cursor: pointer;
+  gap: calc(var(--border)*2);
+  flex: 1;
+  align-items: center;
+  height: calc(var(--height_main)/2);
+  background-color: var(--color_white_dark);
+  left: calc(var(--height_radius)*-2);
+  border-radius: var(--height_radius);
+}
+
+.volume_row .volume_item {
+  display: flex;
+  width: calc(var(--border)*2);
+  height: 100%;
+  border-radius: var(--height_radius);
+  background-color: #b3b3b3;
+}
+
+.speaker.speaker_off ~ .volume_row {
+  display: none;
+}
+
 .names_col.name {
   text-transform: uppercase;
   justify-content: flex-end;
-  padding-right: var(--height_main);
+  margin-right: var(--height_main);
 }
 
 .notes_col .note {
