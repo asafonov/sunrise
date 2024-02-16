@@ -2,12 +2,21 @@ class DrumTrackView {
 
   constructor (name, color, parentContainer) {
     this.controller = new DrumTrackController(name)
-    this.container = document.createElement('div')
-    this.container.classList.add('row')
-    this.container.classList.add('notes_row')
-    parentContainer.appendChild(this.container)
-    this.initName()
-    this.initTrack(color)
+    const container = document.createElement('div')
+    container.classList.add('row')
+    container.classList.add('notes_row')
+    parentContainer.appendChild(container)
+    const volumeContainer = document.createElement('div')
+    volumeContainer.classList.add('col')
+    volumeContainer.classList.add('volume_col')
+    container.appendChild(volumeContainer)
+    const mainContainer = document.createElement('div')
+    mainContainer.classList.add('col')
+    mainContainer.classList.add('main_col')
+    container.appendChild(mainContainer)
+    this.initVolume(volumeContainer)
+    this.initName(mainContainer)
+    this.initTrack(mainContainer, color)
     this.addEventListeners()
   }
 
@@ -23,21 +32,36 @@ class DrumTrackView {
     return this.controller
   }
 
-  initName() {
-    this.nameContainer = document.createElement('div')
-    this.nameContainer.classList.add('col')
-    this.nameContainer.classList.add('names_col')
-    this.nameContainer.classList.add('name')
-    this.nameContainer.innerHTML = this.controller.getModel().getName()
-    this.container.appendChild(this.nameContainer)
+  initName (container) {
+    const nameContainer = document.createElement('div')
+    nameContainer.classList.add('col')
+    nameContainer.classList.add('names_col')
+    nameContainer.classList.add('name')
+    nameContainer.innerHTML = this.controller.getModel().getName()
+    container.appendChild(nameContainer)
   }
 
-  initTrack (color) {
+  initVolume (volumeContainer) {
+    this.volumeContainer = volumeContainer
+    const speakerContainer = document.createElement('div')
+    speakerContainer.className = 'speaker'
+    this.volumeContainer.appendChild(speakerContainer)
+    const volumeRowContainer = document.createElement('div')
+    volumeRowContainer.classList.add('col')
+    volumeRowContainer.classList.add('volume_row')
+    this.volumeContainer.appendChild(volumeRowContainer)
+    volumeRowContainer.innerHTML = '<div class="volume_item"></div>'
+    volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
+    volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
+    volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
+  }
+
+  initTrack (container, color) {
     this.trackContainer = document.createElement('div')
     this.trackContainer.classList.add('col')
     this.trackContainer.classList.add('notes_col')
     this.trackContainer.classList.add(`${color}_color`)
-    this.container.appendChild(this.trackContainer)
+    container.appendChild(this.trackContainer)
     const track = this.controller.getModel().getTrack()
 
     for (let i = 0; i < track.length; ++i) {
@@ -68,8 +92,8 @@ class DrumTrackView {
     this.controller.destroy()
     this.trackContainer.innerHTML = ''
     this.trackContainer = null
-    this.nameContainer = null
-    this.container = null
+    this.volumeContainer.innerHTML = ''
+    this.volumeContainer = null
     this.controller = null
   }
 
