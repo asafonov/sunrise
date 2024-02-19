@@ -23,11 +23,13 @@ class DrumTrackView {
 
   addEventListeners() {
     asafonov.messageBus.subscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
+    asafonov.messageBus.subscribe(asafonov.events.VOLUME_MODEL_UPDATED, this, 'onVolumeModelUpdate')
     this.speakerContainer.addEventListener('click', this.onSpeakerClickProxy)
   }
 
   removeEventListeners() {
     asafonov.messageBus.unsubscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
+    asafonov.messageBus.unsubscribe(asafonov.events.VOLUME_MODEL_UPDATED, this, 'onVolumeModelUpdate')
     this.speakerContainer.removeEventListener('click', this.onSpeakerClickProxy)
   }
 
@@ -78,9 +80,8 @@ class DrumTrackView {
   }
 
   onTrackModelUpdate (data) {
-    if (data.name !== this.controller.getModel().getName()) {
+    if (data.name !== this.controller.getModel().getName())
       return
-    }
 
     const div = this.trackContainer.getElementsByTagName('div')[data.index]
     const track = this.controller.getModel().getTrack()[data.index]
@@ -91,6 +92,13 @@ class DrumTrackView {
 
   onSpeakerClick() {
     asafonov.messageBus.send(asafonov.events.SPEAKER_VIEW_UPDATED, {name: this.controller.getModel().getName()});
+  }
+
+  onVolumeModelUpdate (data) {
+    if(data.name !== this.controller.getModel().getName())
+      return
+
+    this.speakerContainer.classList[data.isMuted ? 'add' : 'remove']('speaker_off')
   }
 
   destroy() {
