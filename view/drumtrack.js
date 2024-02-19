@@ -18,6 +18,7 @@ class DrumTrackView {
     this.initName(mainContainer)
     this.initTrack(mainContainer, color)
     this.onSpeakerClickProxy = this.onSpeakerClick.bind(this)
+    this.onVolumeRowChangeProxy = this.onVolumeRowChange.bind(this)
     this.addEventListeners()
   }
 
@@ -25,12 +26,14 @@ class DrumTrackView {
     asafonov.messageBus.subscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
     asafonov.messageBus.subscribe(asafonov.events.VOLUME_MODEL_UPDATED, this, 'onVolumeModelUpdate')
     this.speakerContainer.addEventListener('click', this.onSpeakerClickProxy)
+    this.volumeRowContainer.addEventListener('mouseup', this.onVolumeRowChangeProxy)
   }
 
   removeEventListeners() {
     asafonov.messageBus.unsubscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
     asafonov.messageBus.unsubscribe(asafonov.events.VOLUME_MODEL_UPDATED, this, 'onVolumeModelUpdate')
     this.speakerContainer.removeEventListener('click', this.onSpeakerClickProxy)
+    this.volumeRowContainer.removeEventListener('mouseup', this.onVolumeRowChangeProxy)
   }
 
   getController() {
@@ -50,14 +53,19 @@ class DrumTrackView {
     this.speakerContainer = document.createElement('div')
     this.speakerContainer.className = 'speaker'
     volumeContainer.appendChild(this.speakerContainer)
-    const volumeRowContainer = document.createElement('div')
-    volumeRowContainer.classList.add('col')
-    volumeRowContainer.classList.add('volume_row')
-    volumeContainer.appendChild(volumeRowContainer)
-    volumeRowContainer.innerHTML = ''
+    this.volumeRowContainer = document.createElement('div')
+    this.volumeRowContainer.classList.add('col')
+    this.volumeRowContainer.classList.add('volume_row')
+    volumeContainer.appendChild(this.volumeRowContainer)
+    this.displayVolume(1)
+  }
 
-    for (let i = 0; i < asafonov.settings.volume.default; ++i)
-      volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
+  displayVolume (volume) {
+    this.volumeRowContainer.innerHTML = ''
+    volume = Math.min(asafonov.settings.volume.max, Math.floor(asafonov.settings.volume.default * volume))
+
+    for (let i = 0; i < volume; ++i)
+      this.volumeRowContainer.innerHTML += '<div class="volume_item"></div>'
   }
 
   initTrack (container, color) {
@@ -94,11 +102,19 @@ class DrumTrackView {
     asafonov.messageBus.send(asafonov.events.SPEAKER_VIEW_UPDATED, {name: this.controller.getModel().getName()});
   }
 
+  onVolumeRowChange (event) {
+    const total = event.target.offsetWidth
+    const current = event.layerX
+    const volume = current / total * asafonov.settings.volume.max / asafonov.settings.volume.default
+    asafonov.messageBus.send(asafonov.events.VOLUME_VIEW_UPDATED, {name: this.controller.getModel().getName(), volume: volume});
+  }
+
   onVolumeModelUpdate (data) {
     if(data.name !== this.controller.getModel().getName())
       return
 
     this.speakerContainer.classList[data.isMuted ? 'add' : 'remove']('speaker_off')
+    this.displayVolume(data.volume)
   }
 
   destroy() {
@@ -106,6 +122,8 @@ class DrumTrackView {
     this.controller.destroy()
     this.trackContainer.innerHTML = ''
     this.trackContainer = null
+    this.volumeRowContainer.innerHTML = ''
+    this.volumeRowContainer = null
     this.speakerContainer = null
     this.controller = null
   }
