@@ -2,7 +2,7 @@ class DrumTrack {
 
   constructor (name, length) {
     this.name = name
-    this.volume = asafonov.settings.volume.default
+    this.volume = 1
     this.isMuted = false
     this.data = []
     this.length = length || 16
@@ -68,6 +68,7 @@ class DrumTrack {
 
   getBytes() {
     if (this.isMuted) return []
+    if (this.volume !== 1) return asafonov.waveUtils.updateVolume(this.data, this.volume)
     return this.data
   }
 

@@ -13,6 +13,27 @@ const waveUtils = {
     return ret
   },
 
+  updateVolume: (wav, volume) => {
+    let i = 0
+    const ret = []
+
+    while (i < wav.length) {
+      let v = wav[i] + wav[i + 1] * 256
+
+      if (v > 256 * 128 - 1) v = v - 256*256 + 1
+
+      v = v * volume
+      v = waveUtils.normalize(v)
+      const first = v % 256
+      const second = (v - first) / 256
+      ret.push(first)
+      ret.push(second)
+      i += 2
+    }
+
+    return ret
+  },
+
   pitch: (wav, ratio) => {
     const bytesPerStep = 2
     let p = 0
