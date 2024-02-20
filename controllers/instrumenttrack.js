@@ -77,12 +77,17 @@ class InstrumentTrackController {
 
     if (! isPlaying) return
 
-    this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying, loop: true}), this.getInterval() * 16)
-
-    if (loop) return asafonov.waveUtils.play()
+    if (loop) {
+      this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying, loop: true}), this.getInterval() * 16)
+      return asafonov.waveUtils.play()
+    }
 
     const data = this.getTrack()
-    data.length > 0 && asafonov.waveUtils.play(data)
+
+    if (data.length > 0) {
+      asafonov.waveUtils.play(data)
+      this.timeout = setTimeout(() => this.onIsPlayingUpdate({isPlaying, loop: true}), this.getInterval() * 16)
+    }
   }
 
   destroy() {
