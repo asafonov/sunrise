@@ -1,7 +1,7 @@
 class DrumTrackView {
 
   constructor (name, color, parentContainer) {
-    this.controller = new DrumTrackController(name)
+    this.name = name
     const container = document.createElement('div')
     container.classList.add('row')
     container.classList.add('notes_row')
@@ -36,16 +36,12 @@ class DrumTrackView {
     this.volumeRowContainer.removeEventListener('mouseup', this.onVolumeRowChangeProxy)
   }
 
-  getController() {
-    return this.controller
-  }
-
-  initName (container) {
+  initName (name, container) {
     const nameContainer = document.createElement('div')
     nameContainer.classList.add('col')
     nameContainer.classList.add('names_col')
     nameContainer.classList.add('name')
-    nameContainer.innerHTML = this.controller.getModel().getName()
+    nameContainer.innerHTML = name
     container.appendChild(nameContainer)
   }
 
@@ -74,43 +70,42 @@ class DrumTrackView {
     this.trackContainer.classList.add('notes_col')
     this.trackContainer.classList.add(`${color}_color`)
     container.appendChild(this.trackContainer)
-    const track = this.controller.getModel().getTrack()
 
-    for (let i = 0; i < track.length; ++i) {
+    for (let i = 0; i < 16; ++i) {
       const div = document.createElement('div')
       div.className = 'note'
-      div.classList.add(`note_o${track[i] ? 'n' : 'ff'}`)
+      div.classList.add('note_off')
       div.addEventListener('click', () => {
-        asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.controller.getModel().getName(), index: i});
+        asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.name, index: i});
       })
       this.trackContainer.appendChild(div)
     }
   }
 
   onTrackModelUpdate (data) {
-    if (data.name !== this.controller.getModel().getName())
+    if (data.name !== this.name)
       return
 
     const div = this.trackContainer.getElementsByTagName('div')[data.index]
-    const track = this.controller.getModel().getTrack()[data.index]
+    const track = data.value
     div.classList.remove('note_off')
     div.classList.remove('note_on')
     div.classList.add(`note_o${track ? 'n' : 'ff'}`)
   }
 
   onSpeakerClick() {
-    asafonov.messageBus.send(asafonov.events.SPEAKER_VIEW_UPDATED, {name: this.controller.getModel().getName()});
+    asafonov.messageBus.send(asafonov.events.SPEAKER_VIEW_UPDATED, {name: this.name});
   }
 
   onVolumeRowChange (event) {
     const total = event.target.offsetWidth
     const current = event.layerX
     const volume = current / total * asafonov.settings.volume.max / asafonov.settings.volume.default
-    asafonov.messageBus.send(asafonov.events.VOLUME_VIEW_UPDATED, {name: this.controller.getModel().getName(), volume: volume});
+    asafonov.messageBus.send(asafonov.events.VOLUME_VIEW_UPDATED, {name: this.name, volume: volume});
   }
 
   onVolumeModelUpdate (data) {
-    if(data.name !== this.controller.getModel().getName())
+    if(data.name !== this.name)
       return
 
     this.speakerContainer.classList[data.isMuted ? 'add' : 'remove']('speaker_off')
@@ -119,13 +114,12 @@ class DrumTrackView {
 
   destroy() {
     this.removeEventListeners()
-    this.controller.destroy()
     this.trackContainer.innerHTML = ''
     this.trackContainer = null
     this.volumeRowContainer.innerHTML = ''
     this.volumeRowContainer = null
     this.speakerContainer = null
-    this.controller = null
+    this.name = null
   }
 
 }

@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     drums: ['kick', 'hihat', 'snare', 'low_tom', 'medium_tom', 'high_tom', 'crash'],
     instruments: ['rocky_guitar']
   }
+  const controller = new TrackController(data)
+  const view = new TrackView(data)
   const controls = ['play', 'stop']
   const controlView = new ControlListView(controls)
 })

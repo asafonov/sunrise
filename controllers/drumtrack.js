@@ -28,6 +28,7 @@ class DrumTrackController {
 
     this.play()
     this.model.updateTrackIndex(data.index)
+    data.value = this.model.getTrack()[data.index]
     asafonov.messageBus.send(asafonov.events.TRACK_MODEL_UPDATED, data)
   }
 
