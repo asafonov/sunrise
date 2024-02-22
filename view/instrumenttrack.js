@@ -13,6 +13,10 @@ class InstrumentTrackView {
     }
   }
 
+  getController() {
+    return this.controller
+  }
+
   destroy() {
     for (let i = 0; i < this.views.length; ++i)
       this.views[i].destroy()
