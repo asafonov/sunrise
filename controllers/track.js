@@ -8,9 +8,21 @@ class TrackController {
 
     if (data.instruments) {
       for (let i = 0; i < data.instruments.length; ++i) {
-        this.instrumentViews.push(new InstrumentController(data.instruments[i]))
+        this.instrumentViews.push(new InstrumentTrackController(data.instruments[i]))
       }
     }
+  }
+
+  addEventListeners() {
+    asafonov.messageBus.subscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
+  }
+
+  removeEventListeners() {
+    asafonov.messageBus.unsubscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
+  }
+
+  getInterval() {
+    return asafonov.waveUtils.getInterval(asafonov.settings.tempo)
   }
 
   onIsPlayingUpdate ({isPlaying, loop}) {

@@ -1,9 +1,8 @@
 class InstrumentNoteTrackView {
 
-  constructor (name, note, track, color, parentContainer) {
+  constructor (name, note, color, parentContainer) {
     this.name = name
     this.note = note
-    this.track = track
     this.container = document.createElement('div')
     this.container.classList.add('row')
     this.container.classList.add('notes_row')
@@ -19,10 +18,6 @@ class InstrumentNoteTrackView {
 
   removeEventListeners() {
     asafonov.messageBus.unsubscribe(asafonov.events.TRACK_MODEL_UPDATED, this, 'onTrackModelUpdate')
-  }
-
-  getController() {
-    return this.controller
   }
 
   initNote() {
@@ -41,10 +36,10 @@ class InstrumentNoteTrackView {
     this.trackContainer.classList.add(`${color}_color`)
     this.container.appendChild(this.trackContainer)
 
-    for (let i = 0; i < this.track.length; ++i) {
+    for (let i = 0; i < 16; ++i) {
       const div = document.createElement('div')
       div.className = 'note'
-      div.classList.add(`note_o${this.track[i] ? 'n' : 'ff'}`)
+      div.classList.add(`note_off'}`)
       div.addEventListener('click', () => {
         asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.name, note: this.note, index: i});
       })
@@ -60,7 +55,7 @@ class InstrumentNoteTrackView {
     const div = this.trackContainer.getElementsByTagName('div')[data.index]
     div.classList.remove('note_off')
     div.classList.remove('note_on')
-    div.classList.add(`note_o${this.track[data.index] ? 'n' : 'ff'}`)
+    div.classList.add(`note_o${data.value ? 'n' : 'ff'}`)
   }
 
   destroy() {
@@ -71,7 +66,6 @@ class InstrumentNoteTrackView {
     this.container = null
     this.name = null
     this.note = null
-    this.track = null
   }
 
 }

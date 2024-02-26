@@ -11,18 +11,6 @@ class DrumTrackListController {
     this.addEventListeners()
   }
 
-  addEventListeners() {
-    asafonov.messageBus.subscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
-  }
-
-  removeEventListeners() {
-    asafonov.messageBus.unsubscribe(asafonov.events.IS_PLAYING_UPDATED, this, 'onIsPlayingUpdate')
-  }
-
-  getInterval() {
-    return asafonov.waveUtils.getInterval(asafonov.settings.tempo)
-  }
-
   mixList() {
     const tracks = []
 
