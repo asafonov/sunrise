@@ -8,7 +8,7 @@ class TrackController {
 
     if (data.instruments) {
       for (let i = 0; i < data.instruments.length; ++i) {
-        this.instrumentViews.push(new InstrumentTrackController(data.instruments[i]))
+        this.instruments.push(new InstrumentTrackController(data.instruments[i]))
       }
     }
   }

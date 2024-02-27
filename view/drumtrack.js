@@ -36,7 +36,7 @@ class DrumTrackView {
     this.volumeRowContainer.removeEventListener('mouseup', this.onVolumeRowChangeProxy)
   }
 
-  initName (name, container) {
+  initName (container) {
     const nameContainer = document.createElement('div')
     nameContainer.classList.add('col')
     nameContainer.classList.add('names_col')

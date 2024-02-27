@@ -8,7 +8,6 @@ class DrumTrackListController {
     }
 
     this.mix = []
-    this.addEventListeners()
   }
 
   mixList() {
@@ -22,10 +21,6 @@ class DrumTrackListController {
   }
 
   destroy() {
-    this.removeEventListeners()
-    this.timeout && clearTimeout(this.timeout)
-    this.timeout = null
-
     for (let i = 0; i < this.tracks.length; ++i)
       this.tracks[i].destroy()
 

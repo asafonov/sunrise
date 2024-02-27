@@ -3,10 +3,9 @@ class InstrumentTrackView {
   constructor (name) {
     this.container = document.querySelector('.instrument')
     this.views = []
-    const list = this.controller.getModel().getTrack()
     let i = 0
 
-    for (let k in list) {
+    for (let k in asafonov.notes) {
       this.views.push(new InstrumentNoteTrackView(name, k, asafonov.colors[i % asafonov.colors.length], this.container))
       ++i
     }
