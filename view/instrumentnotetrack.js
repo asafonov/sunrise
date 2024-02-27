@@ -39,7 +39,7 @@ class InstrumentNoteTrackView {
     for (let i = 0; i < 16; ++i) {
       const div = document.createElement('div')
       div.className = 'note'
-      div.classList.add(`note_off'}`)
+      div.classList.add('note_off')
       div.addEventListener('click', () => {
         asafonov.messageBus.send(asafonov.events.TRACK_VIEW_UPDATED, {name: this.name, note: this.note, index: i});
       })

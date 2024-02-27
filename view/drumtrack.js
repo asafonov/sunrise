@@ -41,7 +41,7 @@ class DrumTrackView {
     nameContainer.classList.add('col')
     nameContainer.classList.add('names_col')
     nameContainer.classList.add('name')
-    nameContainer.innerHTML = name
+    nameContainer.innerHTML = this.name
     container.appendChild(nameContainer)
   }
 
