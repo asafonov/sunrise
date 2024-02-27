@@ -11,6 +11,8 @@ class TrackController {
         this.instruments.push(new InstrumentTrackController(data.instruments[i]))
       }
     }
+
+    this.addEventListeners()
   }
 
   addEventListeners() {
@@ -23,6 +25,17 @@ class TrackController {
 
   getInterval() {
     return asafonov.waveUtils.getInterval(asafonov.settings.tempo)
+  }
+
+  mixList() {
+    const wavs = []
+    this.drums && wavs.push(this.drums.getTrack())
+
+    for (let i = 0; i < this.instruments.length; ++i) {
+      wavs.push(this.instruments[i].getTrack())
+    }
+
+    return asafonov.waveUtils.mixWavs(wavs)
   }
 
   onIsPlayingUpdate ({isPlaying, loop}) {
@@ -46,6 +59,7 @@ class TrackController {
   }
 
   destroy() {
+    this.removeEventListeners()
     this.drums && this.drums.destroy()
     this.drums = null
 
