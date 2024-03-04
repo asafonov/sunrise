@@ -1,13 +1,36 @@
 const waveUtils = {
-  audio: new Audio(),
+  url: null,
 
   normalize: v => v >= 0 ? Math.min(v, 256 * 128 - 1) : Math.max(v, -256 * 128 + 1) + 256 * 256 -1,
+
+  getInterval : tempo => 60 / tempo / 4 * 1000,
 
   formatSize: size => {
     const ret = [size % 256]
     ret.push((size - ret[0]) / 256 % 256)
     ret.push((size - ret[0] - ret[1] * 256) / 256 / 256 % 256)
     ret.push((size - ret[0] - ret[1] * 256 - ret[2] * 256 * 256) / 256 / 256 / 256 % 256)
+    return ret
+  },
+
+  updateVolume: (wav, volume) => {
+    let i = 0
+    const ret = []
+
+    while (i < wav.length) {
+      let v = wav[i] + wav[i + 1] * 256
+
+      if (v > 256 * 128 - 1) v = v - 256*256 + 1
+
+      v = v * volume
+      v = waveUtils.normalize(v)
+      const first = v % 256
+      const second = (v - first) / 256
+      ret.push(first)
+      ret.push(second)
+      i += 2
+    }
+
     return ret
   },
 
@@ -84,14 +107,16 @@ const waveUtils = {
   },
 
   play: bytes => {
+    const audio = new Audio()
+
     if (bytes !== null && bytes !== undefined) {
       const buffer = new Uint8Array(bytes.length + 44)
       buffer.set(new Uint8Array([...waveUtils.getWavHeader(bytes.length), ...bytes]), 0)
       const blob = new Blob([buffer], {type: 'audio/wav'})
-      const url = URL.createObjectURL(blob)
-      waveUtils.audio.src = url
+      waveUtils.url = URL.createObjectURL(blob)
     }
 
-    waveUtils.audio.play()
+    audio.src = waveUtils.url
+    audio.play()
   }
 }

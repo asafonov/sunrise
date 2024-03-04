@@ -25,6 +25,7 @@ class InstrumentTrackController {
 
     this.play(data.note)
     this.model.updateTrackIndex(data.note, data.index)
+    data.value = this.model.getTrack()[data.note][data.index]
     asafonov.messageBus.send(asafonov.events.TRACK_MODEL_UPDATED, data)
   }
 
@@ -42,14 +43,14 @@ class InstrumentTrackController {
     return asafonov.waveUtils.mixWavs(wavs)
   }
 
-  getNoteTrack(note) {
+  getNoteTrack (note) {
     const bitLength = 44100 * 60 / asafonov.settings.tempo
     const length = this.model.getTrack()[note].length
     const wavs = []
     const starts = []
 
     for (let i = 0; i < length; ++i) {
-      if (this.isOn(i)) {
+      if (this.isOn(note, i)) {
         wavs.push(this.model.getBytes(note))
         starts.push(i * bitLength)
       }
@@ -66,6 +67,8 @@ class InstrumentTrackController {
 
   destroy() {
     this.removeEventListeners()
+    this.timeout && clearTimeout(this.timeout)
+    this.timeout = null
     this.model.destroy()
     this.model = null
   }
