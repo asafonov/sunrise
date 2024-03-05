@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     instruments: ['rocky_guitar']
   }
   const controller = new TrackController(data)
+  const tempoController = new TempoController()
   const view = new TrackView(data)
   const controls = ['play', 'stop']
   const controlView = new ControlListView(controls)
+  const tempoView = new TempoView()
 })
