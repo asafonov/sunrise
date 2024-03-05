@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html ontouchmove>
+
+<head>
+  <title>Sunrise studio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel=stylesheet type=text/css href="style.css">
+  <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body id="drums_page">
+  <!-- top -->
+  <div class="row top">
+    <div class="panel controls row">
+        <div class="icon icon_play icon_on">▶</div>
+        <div class="icon icon_stop icon_off">■</div>
+    </div>
+    <div class="panel controls tempo row">
+        <div class="icon icon_minus icon_on">−</div>
+        <div class="number">120</div>
+        <div class="icon icon_plus icon_on">+</div>
+    </div>
+  </div>
+  <!-- /top -->
+  <!-- center -->
+  <div class="row center table wrap notatrack">
+    <div class="table squares">
+        <div class="row">
+            <div class="square square_1">🥁</div>
+            <div class="square square_2"></div>
+        </div>
+        <div class="row">
+            <div class="square square_3"></div>
+            <div class="square square_4"></div>
+        </div>
+      </div>
+  </div>
+  <div class="row center table wrap instrument" style="display: none">
+  </div>
+  <div class="row center table wrap drumtrack">
+
+
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">kick</div>
+        <div class="col notes_col red_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">HIHAT</div>
+        <div class="col notes_col green_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">SNARE</div>
+        <div class="col notes_col yellow_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker speaker_off"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">low_tom</div>
+        <div class="col notes_col green2_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">medium_tom</div>
+        <div class="col notes_col blue_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">high_tom</div>
+        <div class="col notes_col blue2_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+    <div class="row notes_row">
+      <div class="col volume_col">
+        <div class="speaker"></div>
+        <div class="col volume_row">
+          <div class="volume_item"></div>
+        </div>
+      </div>
+      <div class="col main_col">
+        <div class="col names_col name">crash</div>
+        <div class="col notes_col violet_color">
+          <div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div><div class="note note_off"></div>
+        </div>
+      </div>  
+    </div>
+  </div>
+  <!-- /center -->
+</body>
+</html>

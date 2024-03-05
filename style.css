@@ -37,6 +37,27 @@
   --color_violet_off: #402040;
   --color_violet_on: #E617E6;
 
+  --color_extra_red_off:#402033;
+  --color_extra_red_on: #FF0095;
+
+  --color_extra_yellow_off: #402D20;
+  --color_extra_yellow_on: #E66D17;
+
+  --color_extra_green_off: #384020;
+  --color_extra_green_on: #B2E617;
+
+  --color_extra_green2_off: #204022;
+  --color_extra_green2_on: #17E628;
+
+  --color_extra_blue_off: #20403E;
+  --color_extra_blue_on: #17E6D4;
+
+  --color_extra_blue2_off: #202840;
+  --color_extra_blue2_on: #174BE6;
+
+  --color_extra_violet_off: #322040;
+  --color_extra_violet_on: #8F17E6;
+
   --height_wrap: max(1vw, 1vh);
   --height_radius: max(0.4vw, 0.4vh);
   --height_text: max(1.6vw, 1.6vh);
@@ -92,6 +113,7 @@ body {
 
 .row, .col {
   display: flex;
+  align-items: center;
 }
 
 .table {
@@ -295,7 +317,7 @@ body {
   font-size: calc(1.5*var(--height_main));
   margin: 0 var(--height_wrap);
   cursor: pointer;
-  height: var(--height_main);
+  /*height: var(--height_main);*/
 }
 
 .controls .icon.icon_on {
@@ -314,4 +336,60 @@ body {
 .controls .icon.icon_pause {
   font-size: calc(1*var(--height_main));
   line-height: 2.0;
+}
+
+.controls.tempo .icon {
+  font-size: var(--height_main);
+}
+
+.controls.tempo .number::after {
+  content: ' bpm';
+  font-size: initial;
+} 
+
+.notatrack .squares {
+
+}
+
+.notatrack .squares .row {
+  justify-content: space-between;
+}
+
+.squares .square {
+  width: calc(var(--height_main)*6);
+  height: calc(var(--height_main)*6);
+  border-radius: var(--height_main);
+  margin: var(--height_main);
+}
+
+.squares .square:hover {
+
+}
+
+.squares .square_1 {
+  background-color: var(--color_extra_yellow_off);
+}
+.squares .square_1:hover {
+  background-color: var(--color_extra_yellow_on);
+}
+
+.squares .square_2 {
+  background-color: var(--color_extra_violet_off);
+}
+.squares .square_2:hover {
+  background-color: var(--color_extra_violet_on);
+}
+
+.squares .square_3 {
+  background-color: var(--color_extra_blue_off);
+}
+.squares .square_3:hover {
+  background-color: var(--color_extra_blue_on);
+}
+
+.squares .square_4 {
+  background-color: var(--color_extra_green_off);
+}
+.squares .square_4:hover {
+  background-color: var(--color_extra_green_on);
 }
