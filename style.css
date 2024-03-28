@@ -347,10 +347,6 @@ body {
   font-size: initial;
 } 
 
-.notatrack .squares {
-
-}
-
 .notatrack .squares .row {
   justify-content: space-between;
 }
@@ -363,6 +359,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  display: none;
 }
 
 .squares .square_1 {

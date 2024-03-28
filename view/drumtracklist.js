@@ -2,6 +2,7 @@ class DrumTrackListView {
 
   constructor (list) {
     this.container = document.querySelector('.drumtrack')
+    this.container.style.display = 'none'
     this.views = []
 
     for (let i = 0; i < list.length; ++i) {

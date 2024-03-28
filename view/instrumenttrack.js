@@ -2,6 +2,7 @@ class InstrumentTrackView {
 
   constructor (name) {
     this.container = document.querySelector('.instrument')
+    this.container.style.display = 'none'
     this.views = []
     let i = 0
 
