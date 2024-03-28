@@ -360,10 +360,9 @@ body {
   height: calc(var(--height_main)*6);
   border-radius: var(--height_main);
   margin: var(--height_main);
-}
-
-.squares .square:hover {
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .squares .square_1 {
@@ -392,4 +391,17 @@ body {
 }
 .squares .square_4:hover {
   background-color: var(--color_extra_green_on);
+}
+
+.squares .square svg {
+  width: calc(var(--height_main)*3);
+  height: calc(var(--height_main)*3);
+}
+
+.squares .square svg path {
+  fill: var(--color_white_light);
+}
+
+.squares .square:hover svg path {
+  fill: var(--color_black);
 }
