@@ -2,38 +2,42 @@ class TrackView {
 
   constructor (data) {
     this.container = document.querySelector('.tracks')
-    this.instrumentViews = []
-    this.instrumentContainers = []
+    this.instruments = {}
 
     if (data.drums) {
-      this.drumView = new DrumTrackListView(data.drums)
-      this.drumContainer = this.container.querySelector('.drums')
-      this.drumContainer.style.display = 'flex'
+      this.drums = {
+        view: new DrumTrackListView(data.drums),
+        container: this.container.querySelector('.drums')
+      }
+      this.drums.container.style.display = 'flex'
     }
 
     if (data.instruments) {
       for (let i = 0; i < data.instruments.length; ++i) {
-        this.instrumentViews.push(new InstrumentTrackView(data.instruments[i]))
-        this.instrumentContainers.push(this.container.querySelector(`.${data.instruments[i]}`))
-        this.instrumentContainers[this.instrumentContainers.length - 1].style.display = 'flex'
+        this.instruments[data.instruments[i]] = {
+          view: new InstrumentTrackView(data.instruments[i])),
+          container: this.container.querySelector(`.${data.instruments[i]}`)
+        }
+        this.instruments[data.instruments[i]].container.style.display = 'flex'
       }
     }
   }
 
   destroy() {
-    this.drumView && this.drumView.destroy()
-    this.drumView = null
+    this.drums && this.drums.view.destroy()
+    this.drums.view = null
+    this.drums.container = null
+    this.drums = null
 
-    for (let i = 0; i < this.instrumentViews.length; ++i) {
-      this.instrumentViews[i].destroy()
-      this.instrumentViews[i] = null
-      this.instrumentContainers[i] = null
+    for (let i of this.instruments) {
+      i.view.destroy()
+      i.view = null
+      i.container = null
+      i = null
     }
 
-    this.instrumentContainers = null
-    this.instrumentViews = null
+    this.instruments = null
     this.container = null
-    this.drumContainer = null
   }
 
 }
