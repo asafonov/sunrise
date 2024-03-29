@@ -2,7 +2,6 @@ class InstrumentTrackView {
 
   constructor (name) {
     this.container = document.querySelector('.instrument')
-    this.container.style.display = 'none'
     this.views = []
     let i = 0
 
@@ -10,6 +9,16 @@ class InstrumentTrackView {
       this.views.push(new InstrumentNoteTrackView(name, k, asafonov.colors[i % asafonov.colors.length], this.container))
       ++i
     }
+
+    this.hide()
+  }
+
+  hide() {
+    this.container.style.display = 'none'
+  }
+
+  show() {
+    this.container.style.display = 'flex'
   }
 
   destroy() {
