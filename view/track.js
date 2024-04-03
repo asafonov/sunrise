@@ -3,6 +3,7 @@ class TrackView {
   constructor (data) {
     this.container = document.querySelector('.tracks')
     this.instruments = {}
+    this.backContainer = document.querySelector('.go_back')
 
     if (data.drums) {
       this.instruments.drums = {
@@ -23,6 +24,7 @@ class TrackView {
     }
 
     this.onTrackClickProxy = this.onTrackClick.bind(this)
+    this.onBackClickProxy = this.onBackClick.bind(this)
     this.addEventListeners()
   }
 
@@ -30,30 +32,49 @@ class TrackView {
     for (let i in this.instruments) {
       this.instruments[i].container.addEventListener('click', this.onTrackClickProxy)
     }
+
+    this.backContainer.addEventListener('click', this.onBackClickProxy)
   }
 
   removeEventListeners() {
     for (let i in this.instruments) {
       this.instruments[i].container.removeEventListener('click', this.onTrackClickProxy)
     }
+
+    this.backContainer.removeEventListener('click', this.onBackClickProxy)
   }
 
   hide() {
     for (let i in this.instruments) {
       this.instruments[i].container.style.display = 'none'
     }
+
+    this.backContainer.style.display = 'flex'
   }
 
   show() {
     for (let i in this.instruments) {
       this.instrument[i].container.style.display = 'flex'
     }
+
+    this.backContainer.style.display = 'none'
   }
 
   onTrackClick (event) {
     const instrument = event.currentTarget.getAttribute('data-instrument')
     this.instruments[instrument].view.show()
+    this.backContainer.querySelector(`.${instrument}`).classList.add('.icon_on')
     this.hide()
+  }
+
+  onBackClick (event) {
+    const icons = this.backContainer.querySelectorAll('.back_icon')
+
+    for (let i = 0; i < icons.length; ++i) {
+      icons[i].classList.remove('.icon_on')
+    }
+
+    this.show()
   }
 
   destroy() {
@@ -67,6 +88,7 @@ class TrackView {
     }
 
     this.instruments = null
+    this.backContainer = null
     this.container = null
   }
 
