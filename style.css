@@ -64,6 +64,9 @@
   --height_main: max(2.5vw, 2.5vh);
 
   --border: max(0.1vw, 0.1vh);
+
+  --height_util: max(0.8vw, 0.8vh);
+  --border_util: max(0.2vw, 0.2vh);
 }
 
 *, html, body, h1, h2, h3, h4, h5, h6, a, img, ul, ol, li, div, span, b, time,
@@ -114,6 +117,10 @@ body {
 .row, .col {
   display: flex;
   align-items: center;
+}
+
+.row.top {
+  justify-content: space-between;
 }
 
 .table {
@@ -347,6 +354,21 @@ body {
   font-size: initial;
 } 
 
+.controls.go_back {
+  display: grid;
+  grid: auto / auto auto;
+  gap:  var(--border);
+  margin: 0 var(--height_wrap);
+  cursor: pointer;
+}
+
+.controls.go_back .back_icon {
+  width: var(--height_util);
+  height: var(--height_util);
+  border-radius: var(--border_util);
+  background-color: #174BE6;
+}
+
 .notatrack .squares {
 
 }
@@ -365,31 +387,43 @@ body {
   align-items: center;
 }
 
-.squares .square_1 {
+.squares .square_1,
+.controls.go_back .back_icon:nth-of-type(1) {
   background-color: var(--color_extra_yellow_off);
 }
-.squares .square_1:hover {
+.squares .square_1:hover,
+.controls.go_back:hover .back_icon:nth-of-type(1),
+.controls.go_back .back_icon:nth-of-type(1).icon_on {
   background-color: var(--color_extra_yellow_on);
 }
 
-.squares .square_2 {
+.squares .square_2,
+.controls.go_back .back_icon:nth-of-type(2) {
   background-color: var(--color_extra_violet_off);
 }
-.squares .square_2:hover {
+.squares .square_2:hover,
+.controls.go_back:hover .back_icon:nth-of-type(2),
+.controls.go_back .back_icon:nth-of-type(2).icon_on {
   background-color: var(--color_extra_violet_on);
 }
 
-.squares .square_3 {
+.squares .square_3,
+.controls.go_back .back_icon:nth-of-type(3) {
   background-color: var(--color_extra_blue_off);
 }
-.squares .square_3:hover {
+.squares .square_3:hover,
+.controls.go_back:hover .back_icon:nth-of-type(3),
+.controls.go_back .back_icon:nth-of-type(3).icon_on {
   background-color: var(--color_extra_blue_on);
 }
 
-.squares .square_4 {
+.squares .square_4,
+.controls.go_back .back_icon:nth-of-type(4) {
   background-color: var(--color_extra_green_off);
 }
-.squares .square_4:hover {
+.squares .square_4:hover,
+.controls.go_back:hover .back_icon:nth-of-type(4),
+.controls.go_back .back_icon:nth-of-type(4).icon_on {
   background-color: var(--color_extra_green_on);
 }
 
