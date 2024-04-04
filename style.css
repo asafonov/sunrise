@@ -127,6 +127,10 @@ body {
   flex-direction: column;
 }
 
+.grid {
+  display: grid;
+}
+
 .notes_row {
   width: 100%;
   justify-content: space-between;
@@ -336,7 +340,8 @@ body {
   display: none;
 }
 
-.controls .icon_on:hover {
+.controls .icon_on:hover,
+.controls_scroll:hover .scroll {
   color: var(--color_white);
 }
 
@@ -347,6 +352,11 @@ body {
 
 .controls.tempo .icon {
   font-size: var(--height_main);
+}
+
+.controls.tempo .number {
+  width: calc(2*var(--height_main));
+  text-align: center;
 }
 
 .controls.tempo .number::after {
@@ -366,26 +376,46 @@ body {
   width: var(--height_util);
   height: var(--height_util);
   border-radius: var(--border_util);
-  background-color: #174BE6;
 }
 
-.notatrack .squares {
-
+.squares_row {
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: calc(var(--height_main)*3);
 }
 
-.notatrack .squares .row {
-  justify-content: space-between;
+.squares_row .scroll {
+  margin-bottom: var(--height_text);
+}
+
+.controls_scroll .scroll {
+  cursor: pointer;
+}
+
+.scroll.previous::before {
+  content: '⭠ ';
+}
+.scroll.next::after {
+  content: ' ⭢';
+}
+
+.scroll.present {
+  text-align: center;
+}
+
+.grid.squares {
+  grid: auto / auto auto;
+  gap:  var(--height_main);
 }
 
 .squares .square {
   width: calc(var(--height_main)*6);
   height: calc(var(--height_main)*6);
   border-radius: var(--height_main);
-  margin: var(--height_main);
   display: flex;
   justify-content: center;
   align-items: center;
-  display: none;
 }
 
 .squares .square_1,
