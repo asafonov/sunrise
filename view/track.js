@@ -26,6 +26,7 @@ class TrackView {
     this.onTrackClickProxy = this.onTrackClick.bind(this)
     this.onBackClickProxy = this.onBackClick.bind(this)
     this.addEventListeners()
+    this.show()
   }
 
   addEventListeners() {
@@ -49,12 +50,13 @@ class TrackView {
       this.instruments[i].container.style.display = 'none'
     }
 
-    this.backContainer.style.display = 'flex'
+    this.backContainer.style.display = 'grid'
   }
 
   show() {
     for (let i in this.instruments) {
-      this.instrument[i].container.style.display = 'flex'
+      this.instruments[i].container.style.display = 'flex'
+      this.instruments[i].view.hide()
     }
 
     this.backContainer.style.display = 'none'
