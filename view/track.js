@@ -5,6 +5,12 @@ class TrackView {
     this.instruments = {}
     this.backContainer = document.querySelector('.go_back')
 
+    const squares = this.container.querySelectorAll('.square')
+
+    for (let i = 0; i < squares.length; ++i) {
+      squares[i].style.display = 'none'
+    }
+
     if (data.drums) {
       this.instruments.drums = {
         view: new DrumTrackListView(data.drums),
