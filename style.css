@@ -341,7 +341,8 @@ body {
 }
 
 .controls .icon_on:hover,
-.controls_scroll:hover .scroll {
+.controls_scroll:hover .scroll,
+.edit_wave .icon:hover {
   color: var(--color_white);
 }
 
@@ -469,4 +470,82 @@ body {
 
 .squares .square:hover svg path {
   fill: var(--color_black);
+}
+
+.edit_wave {
+  gap: var(--height_text);
+  margin-bottom: calc(2*var(--height_wrap));
+}
+
+.edit_wave .icon {
+  cursor: pointer;
+}
+
+.edit_wave .icon_paste {
+  transform: rotate(90deg);
+}
+
+.edit_wave .icon::after {
+  position: absolute;
+  font-size: initial;
+  top: 100%;
+  left: 0;
+  opacity: 0;
+}
+.edit_wave .icon:hover::after {
+  opacity: 1;
+}
+
+.edit_wave .icon.icon_cut::after {
+  content: 'cut';
+}
+.edit_wave .icon.icon_copy::after {
+  content: 'copy';
+}
+.edit_wave .icon.icon_paste::after {
+  content: 'paste';
+  transform: rotate(-90deg);
+  top: 0;
+  left: 95%;
+}
+
+.wave_pic {
+  width: 90%;
+  height: calc(var(--height_main)*10);
+}
+
+.wave_pic svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wave_pic svg path {
+  fill: var(--color_extra_green2_off);
+}
+
+.select_wave {
+  position: absolute;
+  top: 0;
+  z-index: 99;
+  height: calc(100% + var(--height_main));
+  width: 30%;
+  left: 30%;
+  border-left: var(--border) var(--color_white) solid;
+  border-right: var(--border) var(--color_white) solid;
+  background-color: transparent;
+  -webkit-backdrop-filter: saturate(11);
+  backdrop-filter: saturate(11);
+}
+.select_wave .select_start,
+.select_wave .select_end {
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  color: var(--color_white);
+}
+.select_wave .select_start {
+left: calc(-1*var(--height_text));
+}
+.select_wave .select_end {
+right: calc(-1*var(--height_text));
 }
