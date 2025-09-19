@@ -5,14 +5,6 @@ const waveUtils = {
 
   getInterval : tempo => 60 / tempo / 4 * 1000,
 
-  formatSize: size => {
-    const ret = [size % 256]
-    ret.push((size - ret[0]) / 256 % 256)
-    ret.push((size - ret[0] - ret[1] * 256) / 256 / 256 % 256)
-    ret.push((size - ret[0] - ret[1] * 256 - ret[2] * 256 * 256) / 256 / 256 / 256 % 256)
-    return ret
-  },
-
   updateVolume: (wav, volume) => {
     let i = 0
     const ret = []
@@ -56,18 +48,30 @@ const waveUtils = {
     return ret
   },
 
-  getWavHeader: length => {
-    return [82, 73, 70, 70,
-          ...waveUtils.formatSize(length + 44),
-          87, 65, 86, 69,
-          102, 109, 116, 32,
-          16, 0, 0, 0,
-          1, 0, 2, 0,
-          68, 172, 0, 0,
-          16, 177, 2, 0,
-          4, 0, 16, 0,
-          100, 97, 116, 97,
-          ...waveUtils.formatSize(length)]
+  asFourBytes: size => {
+    const ret = [size % 256]
+    ret.push(((size - ret[0]) / 256) % 256)
+    ret.push(((size - ret[0] - ret[1] * 256) / 256 / 256) % 256)
+    ret.push(((size - ret[0] - ret[1] * 256 - ret[2] * 256 * 256) / 256 / 256 / 256) % 256)
+    return ret
+  },
+
+  getWavHeader: (length, channels = 2, sampleRate = 44100) => {
+    return [
+      82, 73, 70, 70, //FileTypeBlocID (4 bytes) : Identifier « RIFF »  (0x52, 0x49, 0x46, 0x46)
+      ...asFourBytes(length + 44), //FileSize (4 bytes) : Overall file size minus 8 bytes
+      87, 65, 86, 69, //FileFormatID (4 bytes) : Format = « WAVE »  (0x57, 0x41, 0x56, 0x45)
+      102, 109, 116, 32, //FormatBlocID (4 bytes) : Identifier « fmt␣ »  (0x66, 0x6D, 0x74, 0x20)
+      16, 0, 0, 0, //BlocSize (4 bytes) : Chunk size minus 8 bytes, which is 16 bytes here  (0x10)
+      1, 0, //AudioFormat (2 bytes) : Audio format (1: PCM integer, 3: IEEE 754 float)
+      channels, 0, //NbrChannels (2 bytes) : Number of channels
+      ...asFourBytes(sampleRate), //Frequency (4 bytes) : Sample rate (in hertz)
+      ...asFourBytes(sampleRate * channels * 2), //BytePerSec (4 bytes) : Number of bytes to read per second (Frequency * BytePerBloc).
+      channels * 2, 0, //BytePerBloc (2 bytes) : Number of bytes per block (NbrChannels * BitsPerSample / 8).
+      16, 0, //BitsPerSample (2 bytes) : Number of bits per sample
+      100, 97, 116, 97, //DataBlocID (4 bytes) : Identifier « data »  (0x64, 0x61, 0x74, 0x61)
+      ...asFourBytes(length) //DataSize (4 bytes) : SampledData size
+    ]
   },
 
   mixWavs: (wavs, starts) => {
