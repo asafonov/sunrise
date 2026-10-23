@@ -22,6 +22,7 @@ window.asafonov.settings = {
     max: 20
   }
 }
+window.asafonov.loopNumber = 1
 window.onerror = (msg, url, line) => {
   alert(`${msg} on line ${line}`)
 }
