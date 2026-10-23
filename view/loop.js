@@ -34,7 +34,7 @@ class LoopView {
   }
 
   displayLoop() {
-    this.loopContainer.innerHTML = asafonov.loopNumber
+    this.loopContainer.innerHTML = asafonov.loopNumber + 1
   }
 
   destroy() {

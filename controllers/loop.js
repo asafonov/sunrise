@@ -20,7 +20,7 @@ class LoopController {
   }
 
   onPrevLoopRequest() {
-    if (asafonov.loopNumber > 1) {
+    if (asafonov.loopNumber > 0) {
       asafonov.loopNumber--
       asafonov.messageBus.send(asafonov.events.LOOP_UPDATED)
     }
