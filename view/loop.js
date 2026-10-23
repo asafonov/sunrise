@@ -3,9 +3,10 @@ class LoopView {
     this.previousButton = document.querySelector('.previous')
     this.nextButton = document.querySelector('.next')
     this.loopContainer = document.querySelector('.present')
-    this.displayLoop()
     this.onNextClickProxy = this.onNextClick.bind(this)
     this.onPrevClickProxy = this.onPrevClick.bind(this)
+    this.displayLoop()
+    this.addEventListeners()
   }
 
   addEventListeners() {

@@ -11,5 +11,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const controls = ['play', 'stop']
   const controlView = new ControlListView(controls)
   const tempoView = new TempoView()
+  const loopController = new LoopController()
   const loopView = new LoopView()
 })
