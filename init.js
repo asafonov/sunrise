@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   updaterView.showUpdateDialogIfNeeded()
   const data = {
     drums: ['kick', 'hihat', 'snare', 'low_tom', 'medium_tom', 'high_tom', 'crash'],
-    instruments: ['rocky_guitar']
+    instruments: ['rocky_guitar', 'piano']
   }
   const controller = new TrackController(data)
   const tempoController = new TempoController()
