@@ -31,7 +31,6 @@ class DrumTrackController {
     }
 
     const track = this.model[asafonov.loopNumber].getTrack()
-    console.log('loop', this.name, asafonov.loopNumber, track)
 
     for (let index = 0; index < track.length; ++index) {
       const value = track[index]
