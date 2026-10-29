@@ -26,23 +26,33 @@ const waveUtils = {
     return ret
   },
 
-  pitch: (wav, ratio) => {
-    const bytesPerStep = 2
-    let p = 0
-    let i = 0
+  pitch: (wav, ratio, channels = 2, bytesPerSample = 2) => {
+    const frame = channels * bytesPerSample
+    const inFrames = Math.floor(wav.length / frame)
+    const outFrames = Math.floor(inFrames / ratio)
     const ret = []
+    const readSample = (f, off) => {
+      const b = f * frame + off
+      let v = wav[b] + wav[b + 1] * 256
 
-    while (i < wav.length) {
-      const n = parseInt(i / bytesPerStep * (1 - ratio))
+      if (v > 32767) v += -65536
 
-      if (n > p) {
-        p = n
-      } else {
-        for (let j = 0; j < bytesPerStep; ++j)
-          ret.push(wav[i + j])
+      return v
+    }
+
+    for (let j = 0; j < outFrames; ++j) {
+      const t = j * ratio
+      const i0 = Math.floor(t)
+      const frac = t - i0
+
+      for (let c = 0; c < channels; ++c) {
+        const off = c * bytesPerSample
+        const v0 = readSample(i0, off)
+        const v1 = readSample(i0 + 1, off)
+        let v = Math.round(v0 + (v1 - v0) * frac)
+        v = Math.max(-32768, Math.min(32767, v))
+        ret.push(v & 0xff, (v >> 8) & 0xff)
       }
-
-      i += bytesPerStep
     }
 
     return ret
